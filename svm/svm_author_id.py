@@ -12,6 +12,9 @@ import sys
 from time import time
 sys.path.append("../tools/")
 from email_preprocess import preprocess
+from sklearn.svm import SVC
+from sklearn.metrics import accuracy_score
+import numpy as np
 
 
 ### features_train and features_test are the features for the training
@@ -19,11 +22,25 @@ from email_preprocess import preprocess
 ### labels_train and labels_test are the corresponding item labels
 features_train, features_test, labels_train, labels_test = preprocess()
 
-
-
-
+print "for C = 10000.0"
 #########################################################
 ### your code goes here ###
+t0 = time()
+clf = SVC(C = 10000.,kernel="rbf")
+clf.fit(features_train, labels_train)
+print "Training time: ","%0.4f"%(time()-t0)
+
+t1 = time()
+pred = clf.predict(features_test)
+print "Prediction time: ","%0.4f"%(time()-t1)
+
+sum1 = 0
+for i in pred:
+	sum1+= i
+	
+print sum1
+print "Accuracy: ",accuracy_score(labels_test, pred)
+
 
 #########################################################
 
