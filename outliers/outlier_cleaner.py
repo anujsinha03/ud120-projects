@@ -14,7 +14,12 @@ def outlierCleaner(predictions, ages, net_worths):
     cleaned_data = []
 
     ### your code goes here
-
+    def getKey(item):
+        return item[2]
+    
+    result = list(zip(ages, net_worths, net_worths-predictions))
+    result = sorted(result, key=getKey, reverse = True)
+    cleaned_data = result[:int(0.9*len(result))]
     
     return cleaned_data
 
