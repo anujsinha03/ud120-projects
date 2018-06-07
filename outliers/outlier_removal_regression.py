@@ -24,23 +24,20 @@ from sklearn.cross_validation import train_test_split
 ages_train, ages_test, net_worths_train, net_worths_test = train_test_split(ages, net_worths, test_size=0.1, random_state=42)
 
 ### fill in a regression here!  Name the regression object reg so that
+from sklearn import linear_model
+reg = linear_model.LinearRegression()
+reg.fit(ages_train, net_worths_train)
+print "Reg score:", round(reg.score(ages_test, net_worths_test), 4)
+print "Reg slope:", round(reg.coef_, 3)
+print "Reg intercept:", round(reg.intercept_)
 ### the plotting code below works, and you can see what your regression looks like
-
-
-
-
-
-
-
-
-
-
-
 try:
     plt.plot(ages, reg.predict(ages), color="blue")
 except NameError:
     pass
 plt.scatter(ages, net_worths)
+plt.xlabel("ages")
+plt.ylabel("net_worths")
 plt.show()
 
 
@@ -53,12 +50,6 @@ except NameError:
     print "your regression object doesn't exist, or isn't name reg"
     print "can't make predictions to use in identifying outliers"
 
-
-
-
-
-
-
 ### only run this code if cleaned_data is returning data
 if len(cleaned_data) > 0:
     ages, net_worths, errors = zip(*cleaned_data)
@@ -68,7 +59,10 @@ if len(cleaned_data) > 0:
     ### refit your cleaned data!
     try:
         reg.fit(ages, net_worths)
-        plt.plot(ages, reg.predict(ages), color="blue")
+        print "Reg score:", round(reg.score(ages_test, net_worths_test), 4)
+        print "Reg slope:", round(reg.coef_, 3)
+        print "Reg intercept:", round(reg.intercept_)
+        plt.plot(ages, reg.predict(ages), color="green")
     except NameError:
         print "you don't seem to have regression imported/created,"
         print "   or else your regression object isn't named reg"
